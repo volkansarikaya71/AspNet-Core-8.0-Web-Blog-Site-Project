@@ -1,0 +1,93 @@
+﻿@using EntityLayer.Concrete
+@model List<Blog>
+
+@{
+    ViewData["Title"] = "BlogListByWriter";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+@* <script src="/lib/jquery/dist/jquery.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> *@
+
+
+<h1>Yazarın Blogları</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Blog Başlığı</th>
+        <th>Oluşturma Tarihi</th>
+        <th>Kategori</th>
+        <th>Durum</th>
+        <th>Sil</th>
+        <th>Düzenle</th>
+    </tr>
+    @foreach(var item in Model){
+    <tr>
+        <td>@item.BlogId</td>
+            <td>@item.BlogTitle</td>
+            <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
+            <td>
+                <span class="badge badge-primary">@item.Category.CategoryName</span>
+            </td>
+            <td>
+            @if (item.BlogStatus)
+            {
+                <span class="badge badge-success">Aktif</span>
+            }
+            else
+            {
+                <span class="badge badge-secondary">Pasif</span>
+            }
+            </td>
+            <td><a href="/Blog/DeleteBlog/@item.BlogId" onclick="return confirm('Silmek istediğine emin misin?');"  @* id="btn1" *@  class="btn btn-danger">Sil</a></td>
+
+            <td><a href="/Blog/EditBlog/@item.BlogId" class="btn btn-warning">Düzenle</a></td>
+    </tr>
+    }
+</table>
+<a href="/Blog/BlogAdd/" class="btn btn-primary">Yeni Blog Oluştur.</a>
+
+
+
+@* <script>
+    $(document).on('click', '#btn1', function (event) {
+        event.preventDefault(); // Butonun varsayılan davranışını (sayfa yönlendirmesini) engeller.
+
+        var href = $(this).attr('href'); // Hedef URL'yi alır.
+        swal({
+            title: "Silmek İstediğine Emin Misin?",
+            text: "Bu Blog Veri Tabanından Sonsuza Kadar Silecektir!",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "Hayır, İptal Et",
+                    value: null,
+                    visible: true,
+                    className: "btn-secondary",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Evet, Sil",
+                    value: true,
+                    visible: true,
+                    className: "btn-danger",
+                    closeModal: true,
+                }
+            },
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Blog Silindi!", {
+                        icon: "success",
+                    }).then(() => {
+                        // Silme işlemi onaylandıktan sonra sayfayı yönlendir
+                        window.location.href = href;
+                    });
+                } else {
+                    swal("Blog Silme İşleminiz İptal Edildi!");
+                }
+            });
+    });
+</script> *@
+

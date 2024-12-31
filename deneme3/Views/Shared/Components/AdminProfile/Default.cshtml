@@ -1,0 +1,19 @@
+﻿
+<li class="nav-header">
+    <div class="dropdown profile-element">
+        <img alt="image" class="rounded-circle" src="@ViewBag.UserImage" style="width: 100px; height: 100px;" />
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <span class="block m-t-xs font-bold">@ViewBag.NameSurname</span>
+            <span class="text-muted text-xs block">Mühendis<b class="caret"></b></span>
+        </a>
+        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+            <li><a class="dropdown-item" href="profile.html">Profilim</a></li>
+            <li><a class="dropdown-item" href="/Admin/Message/InBox/">Mesajlarım</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/Login/LogOut/">Çıkış Yap</a></li>
+        </ul>
+    </div>
+    <div class="logo-element">
+        VS+
+    </div>
+</li>

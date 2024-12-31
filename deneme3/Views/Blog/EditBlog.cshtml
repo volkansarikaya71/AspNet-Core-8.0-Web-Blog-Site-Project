@@ -1,0 +1,75 @@
+﻿@model EntityLayer.Concrete.Blog
+
+
+@{
+    ViewData["Title"] = "EditBlog";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+@* <script src="/lib/jquery/dist/jquery.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> *@
+
+<h1>Blog Güncelleme Sayfası</h1>
+<br />
+<form class="form-group" method="post" enctype="multipart/form-data">
+    @using (Html.BeginForm("EditBlog", "Blog", FormMethod.Post))
+    {
+        @*     @Html.Label("Blog id")
+    @Html.TextBoxFor(x => x.BlogId, new { @class = "form-control" })
+    <br /> *@
+        @Html.Label("Blog Başlığı")
+        @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BlogTitle)
+        <br />
+
+        <div>
+            <img src="@ViewBag.BlogImage" id="imagePreview" alt="Placeholder Image" style="max-width: 200px; max-height: 200px;" />
+        </div>
+        <br />
+        <div>
+            <input type="file" name="BlogImageLocation" id="BlogImageLocation" />
+        </div>
+        <br />
+        @Html.Label("Blog Kategori")
+        @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
+        <br />
+        @Html.Label("Blog İçeriği")
+        @Html.TextAreaFor(x => x.BlogContent, 12, 3, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BlogContent)
+        <br />
+        @Html.HiddenFor(x => x.BlogId)
+        @Html.HiddenFor(x => x.BlogStatus)
+        @Html.HiddenFor(x => x.WriterId)
+        @Html.HiddenFor(x => x.BlogCreateDate)
+        @Html.HiddenFor(x => x.BlogThumbnailImage)
+        @Html.HiddenFor(x => x.BlogImage)
+        <button id="btn3" class="btn btn-success">Güncelle</button>
+        <a href="/Blog/BlogListByWriter/" class="btn btn-danger">İptal</a>
+    }
+</form>
+@* <script>
+    $('#btn3').click(function (event) {
+        event.preventDefault(); // Varsayılan davranışı engelle.
+
+        // Formdaki verileri al ve sunucuya gönder
+        var form = $(this).closest('form'); // Bu butonun ait olduğu formu seç
+        $.ajax({
+            url: form.attr('action'), // Formun action değerini al (/Blog/EditBlog)
+            type: form.attr('method'), // Formun method değerini al (POST olmalı)
+            data: form.serialize(), // Formdaki verileri JSON formatında al
+            success: function () {
+                // Güncelleme başarılı olduğunda
+                swal({
+                    title: "Güncellendi",
+                    text: "Başarılı Bir Şekilde Blogunuz Güncellendi!",
+                    icon: "success",
+                    button: "Tamam!",
+                }).then((value) => {
+                    // "Tamam!" butonuna basıldığında yönlendir
+                    window.location.href = "/Blog/BlogListByWriter"; // Yönlendirilecek URL
+                });
+            }
+        });
+    });
+</script> *@
+

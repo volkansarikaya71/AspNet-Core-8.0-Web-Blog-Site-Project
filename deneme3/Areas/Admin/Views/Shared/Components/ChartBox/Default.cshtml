@@ -1,0 +1,45 @@
+﻿@using EntityLayer.Concrete
+@model List<Chart>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chartdiv" style="width:800px;height:600px">
+            <h2>Burası Chart Alanıdır</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                       
+                        <th> İsmi </th>
+                        <th> Sayısı </th>
+                        <th> İşlemler </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            
+                            <td> @item.ChartName </td>
+                            <td> @item.ChartCount </td>
+                            <td>
+                                <form action="/Admin/Chart/CategoryChartDnamic/@item.ChartId" method="get" style="display:inline;">
+                                    <button type="submit" class="btn btn-gradient-info">
+                                        <i class="fa fa-times"></i> Düzenle
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/Admin/Chart/DeleteCategoryChartDnamic/@item.ChartId" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa fa-times"></i> Sil
+                                </button>
+                            </form>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

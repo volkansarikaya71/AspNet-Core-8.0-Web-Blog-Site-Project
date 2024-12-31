@@ -1,0 +1,101 @@
+﻿@using EntityLayer.Concrete
+@model Chart
+@{
+    ViewData["Title"] = "CategoryChartDnamic";
+    Layout = "~/Views/Shared/AdmınLayout.cshtml";
+}
+<div class="row">
+    <!-- Google Chart Div -->
+    <div class="col-lg-6">
+        <div id="chartdiv" style="width:100%; height:400px;">
+            <h2>Burası Chart Alanıdır</h2>
+        </div>
+    </div>
+
+    <!-- ChartBox Component -->
+    <div class="col-lg-6">
+        <div style="width:100%; height:400px;">
+            @await Component.InvokeAsync("ChartBox")
+        </div>
+    </div>
+</div>
+@* <div class="row">
+    <div class="col-lg-12">
+        <div id="chartdiv" style="width:800px;height:600px">
+            <h2>Burası Chart Alanıdır</h2>
+        </div>
+        <div  style="width:800px;height:600px">
+            <h2>Burası Chart Tablosudur</h2>
+            @await Component.InvokeAsync("ChartBox")
+        </div>
+        
+    </div>
+</div> *@
+
+
+
+<form method="post">
+    <h2>Burası Chart Ekleme Alanı</h2>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Chart İsmi:</label>
+
+        <div class="col-sm-10"><input type="text" class="form-control" name="ChartName" placeholder="örnek : Bilim" value="@ViewBag.ChartName"></div>
+        @Html.ValidationMessageFor(x => x.ChartName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Sayısı :</label>
+        <div class="col-sm-10"><input type="text" class="form-control" name="ChartCount" placeholder="örnek : 10" value="@ViewBag.Count"></div>
+        @Html.ValidationMessageFor(x => x.ChartCount, "", new { @class = "text-danger" })
+    </div>
+    @if (ViewBag.id == 0)
+    {
+        <button class="btn btn-sm btn-primary">Ekle</button>
+    }
+    else
+    {
+        <button class="btn btn-sm btn-primary">Güncelle</button>
+        <a href="/Admin/Chart/CancelCategoryChartDnamic/" class="btn btn-sm btn-primary">İptal Et</a>
+    }
+
+
+
+</form>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(DrawonLoad);
+
+    function DrawonLoad() {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Chart/ChartDynamic/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'chartname');
+                    data.addColumn('number', 'chartcount');
+
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].chartname, Data[i].chartcount]);
+                    }
+
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                    chart.draw(data,
+                        {
+                            title: "Google Chart Core Projesi",
+                            position: "top",
+                            fontsize: "16px"
+                        });
+                }
+
+            });
+        })
+    }
+
+</script>

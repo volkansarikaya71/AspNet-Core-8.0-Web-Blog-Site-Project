@@ -1,0 +1,26 @@
+﻿@using deneme3.Controllers
+@model List<Class1>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdmınLayout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>İsim</th>
+        <th>Sil</th>
+        <th>Düzenle</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <th><a href="/EmployeeTest/DeleteEmployee/@item.Id" class="btn btn-outline-danger"> Sil</a></th>
+            <th><a href="/EmployeeTest/EditEmployee/@item.Id" class="btn btn-outline-success">Düzenle</a></th>
+        </tr>
+    }
+</table>
+<a href="/EmployeeTest/AddEmployee/" class="btn btn-outline-primary">Yeni Kişi Ekle</a>

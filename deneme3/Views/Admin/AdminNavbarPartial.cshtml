@@ -1,0 +1,87 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+
+            @await Component.InvokeAsync("AdminProfile")
+            @if (User.IsInRole("Admin"))
+            {
+                <li>
+                    <a href="/admin/widget/index/"><i class="fa fa-pie-chart"></i> <span class="nav-label">Dashboard</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/chart/index/"><i class="fa fa-pie-chart"></i> <span class="nav-label">Grafikler</span>  </a>
+                </li>
+
+                @await Component.InvokeAsync("MessageCount")
+
+                <li>
+                    <a href="/admin/chart/CategoryChartDnamic/"><i class="fa fa-pie-chart"></i> <span class="nav-label">Metrikler</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/category/index/"><i class="fa fa-group"></i> <span class="nav-label">Kategoriler</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/AdminBlog/Index/"><i class="fa fa-list-alt"></i> <span class="nav-label">Bloglar</span>  </a>
+                </li>
+
+                <li>
+                    <a href="/admin/Comment/Index/"><i class="fa fa-comment"></i> <span class="nav-label">Yorumlar</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/Rol/Index/"><i class="fa fa-user"></i> <span class="nav-label">Roller</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/Rol/UserRolList/"><i class="fa fa-user"></i> <span class="nav-label">KullanıcıRolleri</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/writer/index/"><i class="fa fa-user"></i> <span class="nav-label">Yazarlar</span>  </a>
+                </li>
+
+@*                 <li>
+                    <a href="metrics.html"><i class="fa fa-info"></i> <span class="nav-label">Ayarlar</span>  </a>
+                </li>
+
+                <li>
+                    <a href="metrics.html"><i class="fa fa-diamond"></i> <span class="nav-label">Bildirim</span>  </a>
+                </li>
+                <li>
+                    <a href="metrics.html"><i class="fa fa-phone"></i> <span class="nav-label">İletişim</span>  </a>
+                </li>
+
+                <li>
+                    <a href="widgets.html"><i class="fa fa-flask"></i> <span class="nav-label">Hakkımızda</span></a>
+                </li> *@
+                <li>
+                    <a href="/admin/blog/ExportStaticExcelBlogList/"><i class="fa fa-flask"></i> <span class="nav-label">Statik Raporlama</span></a>
+                </li>
+                <li>
+                    <a href="/admin/blog/ExportDynamicExcelBlogList/"><i class="fa fa-flask"></i> <span class="nav-label">Dinamik Raporlama</span></a>
+                </li>
+                <li>
+                    <a href="/Login/LogOut"><i class="fa fa-sign-out"></i> <span class="nav-label">Çıkış Yap</span></a>
+                </li>
+            }
+            else
+            {
+                @await Component.InvokeAsync("MessageCount")
+                <li>
+                    <a href="/admin/Comment/Index/"><i class="fa fa-comment"></i> <span class="nav-label">Yorumlar</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/Rol/Index/"><i class="fa fa-user"></i> <span class="nav-label">Roller</span>  </a>
+                </li>
+                <li>
+                    <a href="/admin/Rol/UserRolList/"><i class="fa fa-user"></i> <span class="nav-label">KullanıcıRolleri</span>  </a>
+                </li>
+@*                 <li>
+                    <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Ayarlar</span>  </a>
+                </li> *@
+                <li>
+                    <a href="/Login/LogOut"><i class="fa fa-sign-out"></i> <span class="nav-label">Çıkış Yap</span></a>
+                </li>
+            }
+
+        </ul>
+
+    </div>
+</nav>

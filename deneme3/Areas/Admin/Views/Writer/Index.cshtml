@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdmınLayout.cshtml";
+}
+
+<h1>Yazar Ajax İşlemleri</h1>
+<br />
+<button type="button" id="btngetlist" class="btn btn-outline-primary">Yazar Listesi</button>
+<br />
+<div class="form form-control">     
+    Buraya Yazarlar Gelcek.
+    <div id="writerlist"> </div>
+</div>
+<br />
+<div  class="form form-control">
+    <button type="button" id="btngetbyid" class="btn btn-outline-success">Veri Tabanında Yazar Getir</button>
+    <br />
+    Buraya 1 Yazar Gelcek.
+    <input type="text" id="writerid" placeholder="Yazar Id Değerini Giriniz" class="form-control" />
+    <div id ="writerget"> </div>
+</div>
+<br />
+<br />
+<div class="form form-control">
+    <h1>Yazar Ekleme Kısmı</h1>
+    <input type="text" id="txtwriterid" placeholder="Yazar Id" class="form-control" />
+    <input type="text" id="txtwritername" placeholder="Yazar Name" class="form-control" />
+    <br />
+    <button type="button" id="addwriterbtn" class="btn btn-outline-primary">Yazar Ekle</button>
+</div>
+<div class="form form-control">
+    <h1>Yazar Silme Kısmı</h1>
+    <input type="text" id="txtwriterdeleteid" placeholder="Yazar Id" class="form-control" />
+    <br />
+    <button type="button" id="deletewriterbtn" class="btn btn-outline-primary">Yazar Sil</button>
+</div>
+<div class="form form-control">
+    <h1>Yazar Güncelleme Kısmı</h1>
+    <input type="text" id="txtwriterupdateid" placeholder="Yazar Id" class="form-control" />
+    <input type="text" id="txtwriterupdatename" placeholder="Yazar İsmi" class="form-control" />
+    <br />
+    <button type="button" id="Updatewriterbtn" class="btn btn-outline-primary">Yazarı Güncelle</button>
+</div>
+
+@section scripts{
+    <script>
+        $("#btngetlist").click(function () {
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/Admin/Writer/WriterListStatic",
+                success: function (func) {
+                    let w = jQuery.parseJSON(func);
+                    console.log(func);
+                    let tablehtml = "<table class=table table-bordered><tr><th>Yazar ID</th><th>Yazar Adı</th></tr>";
+                    $.each(w, (index, value) => {
+                        tablehtml += `<tr><td>${value.Id}</td><td>${value.Name}</td></tr>`
+                    });
+                    tablehtml += "</table>";
+                    $("#writerlist").html(tablehtml);
+                }
+            });
+        });
+        $("#btngetbyid").click(x => { //null dondurdugun hata veriyor
+            let id = $("#writerid").val();
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "get",
+                url: "/Admin/Writer/GetWriterById",
+                data: { writerid: id },
+                success: function (func) {
+                    let w = jQuery.parseJSON(func);
+                    console.log(w);
+                    let getvalue = `<table class=table table-bordered><tr><th>Yazar ID</th><th>Yazar Adı</th></tr><tr><td>${w.Id}</td><td>${w.Name}</td></tr></table>`;
+                    $("#writerget").html(getvalue);
+                }
+            });
+        });
+        $("#addwriterbtn").click(function () { 
+            let writer = {
+                Id: $("#txtwriterid").val(),
+                Name: $("#txtwritername").val()
+            };
+            $.ajax({
+                type: "post",
+                url: "/Admin/Writer/AddWriterStatic",
+                data: writer,
+                success: function (func) {
+                    let w = jQuery.parseJSON(func);
+                    alert("Yazar Ekleme İşlemi Başarılı");
+                }
+            });
+        });
+        $("#deletewriterbtn").click(x=>{
+            let writerid =$("#txtwriterdeleteid").val();
+            $.ajax({
+                url: "/Admin/Writer/DeleteWriterStatic/" + writerid,
+                type: "post",
+                dataType:"json",
+                success: function (func) {
+                    alert("Yazar Silme İşlemi Başarılı");
+                }
+            });
+        });
+        $("#Updatewriterbtn").click(function () {
+            let writer = {
+                Id: $("#txtwriterupdateid").val(),
+                Name: $("#txtwriterupdatename").val()
+            };
+            $.ajax({
+                type: "post",
+                url: "/Admin/Writer/UpdateWriterStatic/",
+                data:writer,
+                success: function (func) {
+                    alert("Yazar Güncelleme İşlemi Başarılı");
+                }
+            });
+        });
+        
+    </script>
+
+    
+}

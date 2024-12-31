@@ -1,0 +1,28 @@
+﻿@model EntityLayer.Concrete.Message2
+
+@{
+    ViewData["Title"] = "SendMessage";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>Mesaj Gönderme Ekranı</h1>
+
+<br />
+@* asp-action="Index" *@
+<form class="m-t"  method="post">
+    <div class="form-group">
+        <input type="email" class="form-control" name="ReceiverEmail" placeholder="Alıcının Eposta Adresi">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Mesaj Başlığı" asp-for="Subject">
+        @Html.ValidationMessageFor(x => x.Subject, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Mesaj İçeriği" asp-for="MessageDetails">
+        @Html.ValidationMessageFor(x => x.MessageDetails, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary block full-width m-b">Mesajı Gönder</button>
+@*     <div class="text-danger" asp-validation-summary="ModelOnly">
+    </div> *@
+</form>

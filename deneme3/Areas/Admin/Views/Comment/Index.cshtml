@@ -1,0 +1,89 @@
+﻿@using EntityLayer.Concrete
+@model List<Comment>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdmınLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+
+
+<body>
+
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Yorumlar </h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Kullanici Adi</th>
+                                    <th>Başlık</th>
+                                    <th>Blog İsmi</th>
+                                    <th>Puan</th>
+                                    <th>Tarih</th>
+                                    <th>Sil</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model)
+                                {
+                                <tr>
+                                        <td>@item.CommentId</td>
+                                        <td>@item.CommentUserName</td>
+                                        <td>@item.CommentTitle</td>
+                                        <td>@item.Blog.BlogTitle</td>
+                                        @if (0 <= @item.BlogScore && @item.BlogScore <= 4)
+                                        {
+                                            <td  style="color: red;"> <i class="fa fa-level-down" style="color: red;"></i> @item.BlogScore </td>
+                                        }
+                                        else if (5 <= @item.BlogScore && @item.BlogScore <= 7)
+                                        {
+                                            <td  style="color: #FFD700;"> <i class="fa fa-level-down-alt" style="color: #FFD700;"></i> @item.BlogScore </td> <!-- Altın sarısı -->
+                                        }
+                                        else
+                                        {
+                                            <td  style="color: green;"> <i class="fa fa-level-up" style="color: green;"></i> @item.BlogScore </td>
+                                        }
+
+
+
+
+                                        @* <td class="text-navy"> <i class="fa fa-level-up"></i> @item.BlogScore </td> *@
+                                        <td>@(((DateTime)item.CommenDate).ToString("dd-MMM-yyy"))</td>
+                                        <td>
+                                            <form action="/Admin/Comment/CommentContents/@item.CommentId" method="post" style="display:inline;">
+                                                <button type="submit" class="btn-inverse-info" data-placement="top"><i class="fa fa-times"></i>İçeriği Oku</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="/Admin/Comment/DeleteComment/@item.CommentId" method="post" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger" data-placement="top"><i class="fa fa-times"></i> Sil</button>
+                                        </form>
+                                        </td>
+                                        @* <td><a href="/Admin/Comment/DeleteComment/@item.CommentId" class="btn btn-outline-success">Sil</a></td> *@
+                                    
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

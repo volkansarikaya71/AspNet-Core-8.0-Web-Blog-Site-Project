@@ -1,0 +1,42 @@
+﻿@using EntityLayer.Concrete
+@model List<Message2>
+
+<li class="dropdown">
+    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+        <i class="fa fa-envelope"></i>  <span class="label label-warning">@ViewBag.messagenotreadcount</span>
+    </a>
+    <ul class="dropdown-menu dropdown-messages dropdown-menu-right">
+        @foreach (var item in Model)
+        {
+            @if (!item.Reading)
+            {
+                <li>
+                    <div class="dropdown-messages-box">
+                        <a class="dropdown-item float-left" href="/Admin/Message/InBox/">
+                            <img alt="image" class="rounded-circle" src="@item.Sender.ImageUrl">
+                        </a>
+                        <div class="media-body">
+                            <strong>@item.Sender.NameSurname Sana Mesaj Gonderdi</strong>. <br>
+                            <small class="text-muted">@item.MessageDate.ToShortDateString()</small>
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+        @if (@ViewBag.messagenotreadcount == 0)
+        {
+            <li>
+                <div class="dropdown-messages-box">
+                    <span class="label label-warning">Hiç mesajınız Bulunmamaktadır. :/ </span>
+                </div>
+            </li>
+        }
+        <li>
+            <div class="text-center link-block">
+                <a href="/Admin/Message/InBox/" class="dropdown-item">
+                    <i class="fa fa-envelope"></i> <strong>Bütün Mesajları Göster</strong>
+                </a>
+            </div>
+        </li>
+    </ul>
+</li>

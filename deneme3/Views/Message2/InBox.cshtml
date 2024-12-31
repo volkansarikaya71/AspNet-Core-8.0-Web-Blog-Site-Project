@@ -1,0 +1,40 @@
+﻿@using EntityLayer.Concrete
+@model List<Message2>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>Mesajlarım</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Gönderenin Resmi</th>
+        <th>Konu</th>
+        <th>Gönderen</th>
+        <th>Tarih</th>
+        <th>Mesajı Aç</th>
+        <th>Sil</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        @if (!item.ReceiverDeleteStatus)
+        {
+            <tr>
+                <td>@item.MessageId</td>
+            <td><img src="@item.Sender.ImageUrl" alt="Sender Image" style="width:50px; height:50px; border-radius:50%;"></td>
+            <td>@item.Subject</td>
+            <td>@item.Sender.NameSurname</td>
+            <td>@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</td>
+            <td><a href="/Message2/MesajDetails/@item.MessageId" class="btn btn-warning">Mesajı Aç </a></td>
+            <td>
+                <form action="/Message2/DeleteMessage/@item.MessageId" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" data-placement="top"><i class="fa fa-times"></i> Sil</button>
+                </form>
+            </td>
+        </tr>
+        }
+    }
+</table>
+<a href="/Message2/SendMessage/" class="btn btn-primary">Yeni Mesaj Oluştur.</a>
+

@@ -1,0 +1,32 @@
+﻿@using deneme3.Areas.Admin.Models
+@model RolViewModel
+@{
+    ViewData["Title"] = "RolEdit";
+    Layout = "~/Views/Shared/AdmınLayout.cshtml";
+}
+
+<h1>Rol Düzenleme Sayfası</h1>
+
+
+<form method="post">
+    <div class="form-group">
+        <label>Rol Idsi</label>
+        <input type="text" value="@Model.rolid" name="rolid" class="form-control" readonly="readonly" />
+        <br />
+        <label>Rol Başlığı</label>
+        <input type="text" name="rolname" asp-for="rolname" value="@Model.rolname" class="form-control" />
+        <span asp-validation-for="rolname" class="text-danger"></span>
+    </div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    <button class="btn btn-info">Güncelle</button>
+    <a href="/Admin/Rol/Index/" class="btn btn-danger">İptal</a>
+
+</form>

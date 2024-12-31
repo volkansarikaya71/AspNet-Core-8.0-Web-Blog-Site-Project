@@ -1,0 +1,25 @@
+﻿@model EntityLayer.Concrete.Message2
+
+@{
+    ViewData["Title"] = "MesajDetails";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>Mesaj Detay Sayfası</h1>
+    <br />
+    @Html.Label("Mesaj ID")
+@Html.TextBoxFor(x => x.MessageId, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+<br />
+@Html.Label("Mesaj Başlığı")
+@Html.TextBoxFor(x => x.Subject, new { @class = "form-control", @readonly = "readonly" })
+<br />
+<br />
+@Html.Label("Mesaj İçeriği")
+@Html.TextAreaFor(x => x.MessageDetails, 20, 3, new { @class = "form-control", @readonly = "readonly" })
+<br />
+
+<td><a href="/Message2/InBox/" class="btn btn-warning">Mesajlara Dön </a></td>
+<form action="/Message2/DeleteMessage/@Model.MessageId" method="post" style="display:inline;">
+    <button type="submit" class="btn btn-danger" data-placement="top"><i class="fa fa-times"></i> Sil</button>
+</form>

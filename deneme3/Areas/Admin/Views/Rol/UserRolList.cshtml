@@ -1,0 +1,50 @@
+﻿@* @model List<AppUser> *@
+    @model List<UserRoleViewModel>
+@{
+    ViewData["Title"] = "UserRolList";
+    Layout = "~/Views/Shared/AdmınLayout.cshtml";
+}
+
+<h1>Kullanıcı Rol Listesi</h1>
+
+@* <table class="table table-bordered">
+    <tr>
+        <th>Kullanıcı Adı</th>
+        <th>Rol Ata</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+    <tr>
+        <td>@item.NameSurname</td>
+            <td><a href="/Admin/Rol/AssingnRole/@item.Id" class="btn btn-outline-danger">Rol Ata</a></td>
+    </tr>
+    }
+</table> *@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Kullanıcı Adı</th>
+            <th>Mevcut Roller</th>
+            <th>Rol Ata</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+                    <ul>
+                        @foreach (var role in user.Roles.Where(x => x.Exists))
+                        {
+                            <li>@role.RoleName</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a href="/Admin/Rol/AssingnRole/@user.UserId" class="btn btn-outline-danger">Rol Ata</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
